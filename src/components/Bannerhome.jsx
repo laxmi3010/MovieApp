@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FaAngleRight, FaAngleLeft, FaAnglesLeft } from "react-icons/fa6";
+import { Link } from 'react-router-dom';
 
 const Bannerhome = () => {
   const bannerData = useSelector(state => state.movieoData.bannerData);
@@ -73,9 +74,9 @@ const Bannerhome = () => {
                       <span> | </span>
                       <p className=''>Views:{data.vote_count}</p>
                     </div>
-                    <button className='bg-white text-black w-20 text-sm h-10 font-bold rounded hover:bg-red-500 hover:scale-105 z-40'>
+                    <Link to={"/"+data?.media_type+"/"+data.id} className='bg-white text-black w-20 text-sm h-10 font-bold rounded hover:bg-red-500 hover:scale-105 z-40'>
                       Play Now
-                    </button>
+                    </Link>
                   </div>
                 </div>
                 </div>
