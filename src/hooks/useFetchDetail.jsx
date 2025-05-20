@@ -1,28 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'; // You forgot this import
+// src/hooks/useFetchDetail.jsx
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const useFetachDetail = (endpoint) => {
-  const [data, setdata] = useState([]);
-  const [loading, setloading] = useState(false); // Should be boolean, not []
+const useFetchDetail = (endpoint) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
     try {
-      setloading(true);
-      const response = await axios.get(endpoint);
-      setdata(response.data);
-      console.log('Now Playing:', response.data.results);
+      setLoading(true);
+      const apiKey = 'YOUR_TMDB_API_KEY'; // Replace this with your real key
+      const baseUrl = 'https://api.themoviedb.org/3';
+      const response = await axios.get(`${baseUrl}${endpoint}?api_key=${apiKey}`);
+      setData(response.data);
     } catch (error) {
-      console.error('Error fetching now playing data:', error);
+      console.error('Error fetching detail:', error);
     } finally {
-      setloading(false);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchData();
+    if (endpoint) {
+      fetchData();
+    }
   }, [endpoint]);
 
   return { data, loading };
 };
 
-export default useFetachDetail;
+export default useFetchDetail;

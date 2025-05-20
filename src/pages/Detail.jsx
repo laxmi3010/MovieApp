@@ -1,24 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import useFetchDetail from "../hooks/useFetchDetail";
 import { useSelector } from "react-redux";
 import Horizontalscrollcard from "../components/Horizontalscrollcard";
+import Videoplay from "../components/Videoplay";
 
 const Detail = () => {
   const params = useParams();
   const imageURL = useSelector((state) => state.movieoData.imageURL);
 
   const { data } = useFetchDetail(`/${params?.explore}/${params?.id}`);
-  const { data: castData } = useFetchDetail(
-    `/${params?.explore}/${params?.id}/credits`
-  );
-  const { data: similarData } = useFetchDetail(
-    `/${params?.explore}/${params?.id}/similar`
-  );
+  const { data: castData } = useFetchDetail(`/${params?.explore}/${params?.id}/credits`);
+  const { data: similarData } = useFetchDetail(`/${params?.explore}/${params?.id}/similar`);
+  const { data: recomendatitionData } = useFetchDetail(`/${params?.explore}/${params?.id}/recommendations`);
 
-  const { data: recomendatitionData } = useFetchDetail(
-    `/${params?.explore}/${params?.id}/recommendations`
-  );
+  const [playVideo, setPlayVideo] = useState(false);
+  const [playVideoData, setPlayVideoData] = useState(null);
+
+  const handlePlayVideo = (movieOrShowData) => {
+    setPlayVideoData(movieOrShowData); // full data object
+    setPlayVideo(true);
+  };
 
   const writer = castData?.crew
     ?.filter(
@@ -40,13 +42,20 @@ const Detail = () => {
     <div className="w-full min-h-screen bg-black text-white">
       {/* Top Section */}
       <div className="flex flex-col md:flex-row md:h-screen max-w-screen-xl mx-auto">
-        {/* Left - Image */}
-        <div className="w-full md:w-1/2 flex justify-start items-center p-4">
+        {/* Left - Image and Play Button */}
+        <div className="w-full md:w-1/2 flex flex-col justify-start items-center p-4">
           <img
             src={imageURL + data?.backdrop_path}
             alt="Backdrop"
             className="w-full h-[50vh] md:w-[120%] md:h-[80vh] object-cover rounded"
           />
+          <button
+            onClick={() => handlePlayVideo(data)}
+            className="mt-4 px-6 py-2 bg-white text-black font-semibold rounded shadow-md 
+              hover:bg-red-600 hover:text-white hover:scale-105 transition-all"
+          >
+            ▶ Play Now
+          </button>
         </div>
 
         {/* Right - Details */}
@@ -81,15 +90,11 @@ const Detail = () => {
       {/* Crew Section */}
       <div className="p-4 max-w-screen-xl mx-auto">
         <h2 className="text-xl mt-4">
-          <span className="text-2xl font-semibold">Director</span>:{" "}
-          {director || "Not Available"}
+          <span className="text-2xl font-semibold">Director</span>: {director || "Not Available"}
         </h2>
-
         <h2 className="text-xl mt-2">
-          <span className="text-2xl font-semibold">Writer</span>:{" "}
-          {writer || "Not Available"}
+          <span className="text-2xl font-semibold">Writer</span>: {writer || "Not Available"}
         </h2>
-
         <h2 className="text-xl mt-4">
           <span className="text-2xl font-semibold">Star Cast:</span>
           <div className="flex flex-wrap gap-4 mt-2">
@@ -124,6 +129,7 @@ const Detail = () => {
         />
       </div>
 
+      {/* Recommendations */}
       <div className="p-4 max-w-screen-xl mx-auto">
         <Horizontalscrollcard
           data={recomendatitionData?.results || []}
@@ -131,6 +137,11 @@ const Detail = () => {
           media_Type={params?.explore}
         />
       </div>
+
+      {/* Video Modal */}
+      {playVideo && playVideoData && (
+        <Videoplay data={playVideoData} close={() => setPlayVideo(false)} media_type={params?.explore} />
+      )}
     </div>
   );
 };

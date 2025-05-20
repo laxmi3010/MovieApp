@@ -27,14 +27,12 @@ const Explore = () => {
     }
   };
 
-  // Reset data when params.id changes
   useEffect(() => {
     setPageNo(1);
     setData([]);
-    window.scrollTo(0, 0); // Scroll to top on type change
+    window.scrollTo(0, 0);
   }, [params.id]);
 
-  // Fetch data when page or id changes
   useEffect(() => {
     fetchData();
   }, [pageNo, params.id]);
@@ -49,7 +47,6 @@ const Explore = () => {
     }
   };
 
-  // Set up scroll event
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -61,7 +58,9 @@ const Explore = () => {
         <h3 className='capitalize text-cyan-50 text-2xl font-bold my-2'>
           Popular {params.id} Shows
         </h3>
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6'>
+
+        {/* ✅ Flex on mobile, grid from sm and up */}
+        <div className='flex justify-center flex-wrap gap-6 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 sm:justify-start'>
           {data.map((exploreData) => (
             <Card
               data={exploreData}
@@ -70,6 +69,7 @@ const Explore = () => {
             />
           ))}
         </div>
+
         {loading && <p className="text-cyan-300 text-center my-4">Loading more...</p>}
       </div>
     </div>
