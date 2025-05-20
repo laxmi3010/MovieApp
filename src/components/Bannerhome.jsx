@@ -74,9 +74,11 @@ const Bannerhome = () => {
                       <span> | </span>
                       <p className=''>Views:{data.vote_count}</p>
                     </div>
-                    <Link to={"/"+data?.media_type+"/"+data.id} className='bg-white text-black w-20 text-sm h-10 font-bold rounded hover:bg-red-500 hover:scale-105 z-40'>
+                   <Link to={"/"+data?.media_type+"/"+data.id}>
+                    <button  className='bg-white text-black w-100 text-sm h-10 font-bold rounded hover:bg-red-500 hover:scale-105 z-40'>
                       Play Now
-                    </Link>
+                    </button>
+                   </Link>
                   </div>
                 </div>
                 </div>
