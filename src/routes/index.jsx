@@ -15,7 +15,7 @@ import PublicRoute from "../utils/PublicRoute";
 import WatchTogether from "../pages/Watchtogether";
 import Quiz from "../pages/Quiz";
 import Subscription from "../pages/Subscription";
-import VideoWatchPage from "../pages/Videowatchpage";
+import VideoWatchPage from "../pages/VideoWatchPage";
 import LiveWatchPage from "../pages/LiveWatchPage";
 
 const router = createBrowserRouter([
