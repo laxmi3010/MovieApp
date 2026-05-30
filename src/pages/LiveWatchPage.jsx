@@ -14,7 +14,7 @@ import { HiUserGroup } from "react-icons/hi";
 import { getSocket } from "../socket"; // ← shared singleton (no local getSocket here)
 import useFetchDetail from "../hooks/useFetchDetail";
 import API_URL from "../config/api";
-import ChatPanel from "../components/Chatpanel";
+import ChatPanel from "../components/ChatPanel";
 
 const LiveWatchPage = () => {
   const { code }    = useParams();
