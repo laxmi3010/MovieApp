@@ -4,7 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MessageCircle, X, Send } from "lucide-react";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = import.meta.env.VITE_BACKEND_API_URL;
 
 const TypingDots = () => (
   <div className="flex items-center gap-1 px-4 py-3">
